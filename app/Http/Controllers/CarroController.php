@@ -1,15 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Carro; 
+
+use App\Models\Carro;
 use Illuminate\Http\Request;
 
 class CarroController extends Controller
 {
     public function index() {
-        return view('carros.index', [
-            'carros' => Carro::all()
-        ]);
+        $carros = Carro::all();
+        return view('carros.index', compact('carros'));
     }
 
     public function create() {
@@ -17,6 +17,15 @@ class CarroController extends Controller
     }
 
     public function store(Request $request) {
+        $request->validate([
+            'modelo' => 'required',
+            'placa' => 'required|unique:carros,placa',
+            'marca' => 'required',
+            'ano' => 'required|integer',
+            'preco_diaria' => 'required|numeric',
+            'status' => 'required'
+        ]);
+
         Carro::create($request->all());
         return redirect()->route('carros.index');
     }
@@ -26,6 +35,15 @@ class CarroController extends Controller
     }
 
     public function update(Request $request, Carro $carro) {
+        $request->validate([
+            'modelo' => 'required',
+            'placa' => 'required|unique:carros,placa,' . $carro->id,
+            'marca' => 'required',
+            'ano' => 'required|integer',
+            'preco_diaria' => 'required|numeric',
+            'status' => 'required'
+        ]);
+
         $carro->update($request->all());
         return redirect()->route('carros.index');
     }

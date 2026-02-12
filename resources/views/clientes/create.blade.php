@@ -1,35 +1,48 @@
 @extends('layouts.app')
 
-@section('conteudo')
-<h2>Novo Cliente</h2>
-
-<form method="POST" action="{{ route('clientes.store') }}" class="card card-body">
-    @csrf
-
-    <div class="mb-3">
-        <label class="form-label">Nome</label>
-        <input type="text" name="nome" class="form-control">
+@section('content')
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>Cadastrar Cliente</h1>
+        <a href="{{ route('clientes.index') }}" class="btn btn-secondary">Voltar</a>
     </div>
 
-    <div class="mb-3">
-        <label class="form-label">Email</label>
-        <input type="email" name="email" class="form-control">
-    </div>
+    {{-- Exibir erros de validação --}}
+    @if($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
-    <div class="mb-3">
-        <label class="form-label">Senha</label>
-        <input type="password" name="senha" class="form-control">
-    </div>
+    <form action="{{ route('clientes.store') }}" method="POST">
+        @csrf
 
-    <div class="mb-3">
-        <label class="form-label">Status</label>
-        <select name="status" class="form-select">
-            <option value="ativo">Ativo</option>
-            <option value="inativo">Inativo</option>
-        </select>
-    </div>
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" name="nome" id="nome" class="form-control" value="{{ old('nome') }}" required>
+        </div>
 
-    <button class="btn btn-success">Salvar</button>
-    <a href="{{ route('clientes.index') }}" class="btn btn-secondary">Voltar</a>
-</form>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="senha" class="form-label">Senha</label>
+            <input type="password" name="senha" id="senha" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="status" class="form-label">Status</label>
+            <select name="status" id="status" class="form-select" required>
+                <option value="ativo" {{ old('status') == 'ativo' ? 'selected' : '' }}>Ativo</option>
+                <option value="inativo" {{ old('status') == 'inativo' ? 'selected' : '' }}>Inativo</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-success">Cadastrar</button>
+    </form>
 @endsection

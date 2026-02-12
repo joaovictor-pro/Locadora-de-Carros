@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Cliente extends Model
 {
-    protected $fillable = ['nome','email','senha','status'];
+    use HasFactory;
 
-    public function alugueis() {
-        return $this->hasMany(Aluguel::class);
-    }
+    protected $fillable = [
+        'nome',
+        'email',
+        'senha',
+        'status',
+    ];
 }

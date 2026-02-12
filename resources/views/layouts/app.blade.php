@@ -2,75 +2,39 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Locadora</title>
-
-    <!-- BELEZA DO SITE -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locadora de Carros</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    <style>
-        body {
-            background-color: #f4f6f9;
-        }
-
-        .navbar-brand {
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-
-        .nav-link {
-            font-weight: 500;
-        }
-
-        .nav-link:hover {
-            color: #ff00bf !important;
-        }
-
-        .card {
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-        }
-    </style>
 </head>
 <body>
-
-<!-- BARRA DE LOCALIZAÇÃO -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-    <div class="container">
-        <a class="navbar-brand" href="#">
-            <i class="bi bi-car-front-fill me-2"></i>Locadora
-        </a>
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="menu">
-            <ul class="navbar-nav ms-auto gap-2">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('clientes.index') }}">
-                        <i class="bi bi-people-fill me-1"></i>Clientes
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('carros.index') }}">
-                        <i class="bi bi-car-front me-1"></i>Carros
-                    </a>
-                </li>
-            </ul>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="{{ route('clientes.index') }}">Locadora</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('clientes.index') }}">Clientes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('carros.index') }}">Carros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('aluguels.index') }}">Aluguéis</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
-<!-- TODO O CONTEUDO -->
-<div class="container">
-    <div class="card p-4">
-        @yield('conteudo')
+    <div class="container">
+        {{-- Aqui vai o conteúdo de cada página --}}
+        @yield('content')
     </div>
-</div>
 
-<!-- BELEZA DO SITE -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
