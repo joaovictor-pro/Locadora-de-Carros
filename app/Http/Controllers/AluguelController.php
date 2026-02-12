@@ -10,18 +10,21 @@ use Carbon\Carbon;
 
 class AluguelController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $aluguels = Aluguel::with(['cliente', 'carro'])->get();
         return view('aluguels.index', compact('aluguels'));
     }
 
-    public function create() {
+    public function create()
+    {
         $carros = Carro::where('status', 'disponivel')->get();
         $clientes = Cliente::all();
         return view('aluguels.create', compact('carros', 'clientes'));
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $request->validate([
             'cliente_id' => 'required|exists:clientes,id',
             'carro_id' => 'required|exists:carros,id',
@@ -30,7 +33,7 @@ class AluguelController extends Controller
         ]);
 
         $carro = Carro::findOrFail($request->carro_id);
-        if ($carro->status != 'disponivel') return back()->withErrors(['carro_id'=>'Carro não disponível']);
+        if ($carro->status != 'disponivel') return back()->withErrors(['carro_id' => 'Carro não disponível']);
 
         $aluguel = Aluguel::create([
             'cliente_id' => $request->cliente_id,
@@ -44,13 +47,15 @@ class AluguelController extends Controller
         return redirect()->route('aluguels.index');
     }
 
-    public function edit(Aluguel $aluguel) {
+    public function edit(Aluguel $aluguel)
+    {
         $clientes = Cliente::all();
         $carros = Carro::all();
         return view('aluguels.edit', compact('aluguel', 'clientes', 'carros'));
     }
 
-    public function update(Request $request, Aluguel $aluguel) {
+    public function update(Request $request, Aluguel $aluguel)
+    {
         $request->validate([
             'cliente_id' => 'required|exists:clientes,id',
             'carro_id' => 'required|exists:carros,id',
@@ -69,14 +74,15 @@ class AluguelController extends Controller
         ]);
 
         $carro = Carro::find($request->carro_id);
-        $carro->update(['status' => ($request->status=='aberto')?'alugado':'disponivel']);
+        $carro->update(['status' => ($request->status == 'aberto') ? 'alugado' : 'disponivel']);
 
         return redirect()->route('aluguels.index');
     }
 
-    public function destroy(Aluguel $aluguel) {
+    public function destroy(Aluguel $aluguel)
+    {
         $carro = $aluguel->carro;
-        $carro->update(['status'=>'disponivel']);
+        $carro->update(['status' => 'disponivel']);
         $aluguel->delete();
         return redirect()->route('aluguels.index');
     }
